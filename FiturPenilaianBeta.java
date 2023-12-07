@@ -4,7 +4,9 @@ public class FiturPenilaianBeta {
 
     static Scanner sc = new Scanner(System.in);
     static int[] arrayPenilaian = { 1, 2, 3, 4, 5 };
-    static String[] feedbackArray = new String[10]; // Misalnya, batasi hingga 10 feedback
+    static String[] feedbackArray = new String[10];
+    static String[] namaPenggunaArray = new String[10];
+    static int[] nilaiArray = new int[10];
     static int feedbackCount = 0;
 
     static void penilaian() {
@@ -16,6 +18,11 @@ public class FiturPenilaianBeta {
             System.out.println("\n=============================================================");
             System.out.println("=                        Penilaian                          =");
             System.out.println("=============================================================\n");
+
+            // input nama pengguna
+            System.out.print("Masukkan Nama Anda: ");
+            namaPenggunaArray[feedbackCount] = sc.next();
+            System.out.println();
 
             // input penilaian pelanggan
             System.out.println("Beri penilaian berdasarkan pengalaman anda terhadap aplikasi ini");
@@ -47,8 +54,9 @@ public class FiturPenilaianBeta {
         sc.nextLine(); // Membersihkan newline
         String feedback = sc.nextLine();
 
-        // Tambahkan feedback ke array
+        // Tambahkan feedback, nama pengguna, dan nilai ke array
         feedbackArray[feedbackCount] = feedback;
+        nilaiArray[feedbackCount] = penilaian;
         feedbackCount++;
 
         System.out.println("\nFeedback anda telah tersimpan");
@@ -58,26 +66,65 @@ public class FiturPenilaianBeta {
         System.out.println("=                       System out                         =");
         System.out.println("============================================================\n");
 
-        // Tampilkan feedback yang telah tersimpan
-        lihatFeedback(penilaian);
     }
 
-    // Fungsi untuk menampilkan feedback yang telah tersimpan
-    static void lihatFeedback(int penilaian) {
+    // Fungsi lihat feedback
+    static void lihatFeedback() {
+
         System.out.println("\n=============================================================");
         System.out.println("=                    Daftar Feedback                        =");
         System.out.println("=============================================================\n");
 
-        // Tampilkan nilai pengguna ke-n
-        System.out.println("\nNilai Pengguna ke-" + feedbackCount + ": " + penilaian);
+        if (feedbackCount == 0) {
+            System.out.println("\nBelum ada feedback yang tersimpan.");
+            return;
+        }
+
+        double totalNilai = 0;
 
         // Tampilkan feedback yang telah tersimpan
         for (int i = 0; i < feedbackCount; i++) {
-            System.out.println("Feedback Pengguna ke-" + (i + 1) + ": " + feedbackArray[i]);
+
+            totalNilai += nilaiArray[i];
+            
+            System.out.println("\nFeedback Pengguna ke-" + (i + 1) + ":");
+            System.out.println("Nama Pengguna: " + namaPenggunaArray[i]);
+            System.out.println("Nilai: " + nilaiArray[i]);
+            System.out.println("Feedback: " + feedbackArray[i]);
+
         }
+
+        // Hitung dan tampilkan nilai rata-rata
+        double rataRata = totalNilai / feedbackCount;
+        System.out.printf("\nRata-rata nilai: %.2f\n", rataRata);
     }
 
     public static void main(String[] args) {
-        penilaian();
+        int choice;
+
+        do {
+            System.out.println("\n============================================================");
+            System.out.println("=                        Main Menu                          =");
+            System.out.println("============================================================\n");
+            System.out.println("1. Beri Penilaian dan Feedback");
+            System.out.println("2. Lihat Penilaian dan Feedback Pengguna");
+            System.out.println("3. Keluar");
+            System.out.print("Pilih menu (1/2/3): ");
+            choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    penilaian();
+                    break;
+                case 2:
+                    lihatFeedback();
+                    break;
+                case 3:
+                    System.out.println("Terima kasih! Sampai jumpa lagi.");
+                    break;
+                default:
+                    System.out.println("Pilihan tidak valid. Silakan pilih lagi.");
+            }
+        } while (choice != 3);
     }
 }
