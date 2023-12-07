@@ -3,17 +3,24 @@ import java.util.Scanner;
 public class FiturPenilaianBeta {
 
     static Scanner sc = new Scanner(System.in);
+    // Array penilaian 1-5
     static int[] arrayPenilaian = { 1, 2, 3, 4, 5 };
+    // Array Feedback
     static String[] feedbackArray = new String[10];
+    // Array nama pengguna
     static String[] namaPenggunaArray = new String[10];
+    // Array Nilai
     static int[] nilaiArray = new int[10];
     static int feedbackCount = 0;
 
+    /*
+     * Function Penilaian
+     */
     static void penilaian() {
         int penilaian = 0;
         boolean isPenilaian = false;
 
-        // input penilaian 1-5
+        // Penilaian yang akan dipilih pengguna
         while (!isPenilaian) {
             System.out.println("\n=============================================================");
             System.out.println("=                        Penilaian                          =");
@@ -24,7 +31,7 @@ public class FiturPenilaianBeta {
             namaPenggunaArray[feedbackCount] = sc.next();
             System.out.println();
 
-            // input penilaian pelanggan
+            // input penilaian pengguna
             System.out.println("Beri penilaian berdasarkan pengalaman anda terhadap aplikasi ini");
             System.out.println("1 = Sangat Tidak Puas");
             System.out.println("2 = Tidak Puas");
@@ -46,16 +53,17 @@ public class FiturPenilaianBeta {
             }
         }
 
-        // input feedback kepuasan pengguna
+        // input feedback oleh pengguna
         System.out.println("\n=============================================================");
         System.out.println("=                         feedback                          =");
         System.out.println("=============================================================\n");
         System.out.println("Kami ingin mendengar lebih lanjut, silahkan berikan feedback / saran anda: ");
-        sc.nextLine(); // Membersihkan newline
+        sc.nextLine();
         String feedback = sc.nextLine();
 
-        // Tambahkan feedback, nama pengguna, dan nilai ke array
+        // Menambahkan feedback
         feedbackArray[feedbackCount] = feedback;
+        // Menambahkan Nilai Penngguna
         nilaiArray[feedbackCount] = penilaian;
         feedbackCount++;
 
@@ -68,7 +76,9 @@ public class FiturPenilaianBeta {
 
     }
 
-    // Fungsi lihat feedback
+    /*
+     * Function lihat feedback
+     */
     static void lihatFeedback() {
 
         System.out.println("\n=============================================================");
@@ -82,11 +92,11 @@ public class FiturPenilaianBeta {
 
         double totalNilai = 0;
 
-        // Tampilkan feedback yang telah tersimpan
+        // Menampilkan data feedback yang tersimpan
         for (int i = 0; i < feedbackCount; i++) {
 
             totalNilai += nilaiArray[i];
-            
+
             System.out.println("\nFeedback Pengguna ke-" + (i + 1) + ":");
             System.out.println("Nama Pengguna: " + namaPenggunaArray[i]);
             System.out.println("Nilai: " + nilaiArray[i]);
@@ -94,7 +104,7 @@ public class FiturPenilaianBeta {
 
         }
 
-        // Hitung dan tampilkan nilai rata-rata
+        // Menghitung nilai rata-rata
         double rataRata = totalNilai / feedbackCount;
         System.out.printf("\nRata-rata nilai: %.2f\n", rataRata);
     }
