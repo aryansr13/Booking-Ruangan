@@ -13,6 +13,42 @@ public class FiturPenilaianBeta {
     static int[] nilaiArray = new int[10];
     static int feedbackCount = 0;
 
+    // Menu
+    static boolean menu = true;
+
+    /*
+     * Pilihan penilaian
+     */
+    static void pilihPenilaian() {
+        int choice;
+
+        do {
+            System.out.println("\n============================================================");
+            System.out.println("=                        Penilaian                         =");
+            System.out.println("============================================================\n");
+            System.out.println("[1] Beri Penilaian dan Feedback");
+            System.out.println("[2] Lihat Penilaian dan Feedback Pengguna");
+            System.out.println("[0] Keluar");
+            System.out.print("Pilih menu (1/2/3): ");
+            choice = sc.nextInt();
+
+            switch (choice) {
+                case 1:
+                    penilaian();
+                    break;
+                case 2:
+                    lihatFeedback();
+                    break;
+                case 0:
+                    menu = false;
+                    System.out.println();
+                    break;
+                default:
+                    System.out.println("Pilihan tidak valid. Silakan pilih lagi.");
+            }
+        } while (choice != 0);
+    }
+
     /*
      * Function Penilaian
      */
@@ -41,6 +77,7 @@ public class FiturPenilaianBeta {
             System.out.print("Silahkan isi penilaian sesuai kepuasan anda: ");
             penilaian = sc.nextInt();
 
+            // Pilihan user
             for (int i : arrayPenilaian) {
                 if (penilaian == i) {
                     isPenilaian = true;
@@ -48,6 +85,7 @@ public class FiturPenilaianBeta {
                 }
             }
 
+            // Input user ketika salah
             if (!isPenilaian) {
                 System.out.println("\nAngka yang anda masukan salah, silahkan coba lagi!\n");
             }
@@ -57,7 +95,7 @@ public class FiturPenilaianBeta {
         System.out.println("\n=============================================================");
         System.out.println("=                         feedback                          =");
         System.out.println("=============================================================\n");
-        System.out.println("Kami ingin mendengar lebih lanjut, silahkan berikan feedback / saran anda: ");
+        System.out.println("Kami ingin mendengar penilaian anda, silahkan berikan feedback / saran anda: ");
         sc.nextLine();
         String feedback = sc.nextLine();
 
@@ -65,6 +103,7 @@ public class FiturPenilaianBeta {
         feedbackArray[feedbackCount] = feedback;
         // Menambahkan Nilai Penngguna
         nilaiArray[feedbackCount] = penilaian;
+        // Feedback +1
         feedbackCount++;
 
         System.out.println("\nFeedback anda telah tersimpan");
@@ -85,16 +124,19 @@ public class FiturPenilaianBeta {
         System.out.println("=                    Daftar Feedback                        =");
         System.out.println("=============================================================\n");
 
+        // Ketika belum ada feedback
         if (feedbackCount == 0) {
             System.out.println("\nBelum ada feedback yang tersimpan.");
             return;
         }
 
+        // Nilai Rata-rata
         double totalNilai = 0;
 
         // Menampilkan data feedback yang tersimpan
         for (int i = 0; i < feedbackCount; i++) {
 
+            // Rumus total nilai
             totalNilai += nilaiArray[i];
 
             System.out.println("\nFeedback Pengguna ke-" + (i + 1) + ":");
@@ -110,31 +152,9 @@ public class FiturPenilaianBeta {
     }
 
     public static void main(String[] args) {
-        int choice;
-
         do {
-            System.out.println("\n============================================================");
-            System.out.println("=                        Main Menu                          =");
-            System.out.println("============================================================\n");
-            System.out.println("1. Beri Penilaian dan Feedback");
-            System.out.println("2. Lihat Penilaian dan Feedback Pengguna");
-            System.out.println("3. Keluar");
-            System.out.print("Pilih menu (1/2/3): ");
-            choice = sc.nextInt();
-
-            switch (choice) {
-                case 1:
-                    penilaian();
-                    break;
-                case 2:
-                    lihatFeedback();
-                    break;
-                case 3:
-                    System.out.println("Terima kasih! Sampai jumpa lagi.");
-                    break;
-                default:
-                    System.out.println("Pilihan tidak valid. Silakan pilih lagi.");
-            }
-        } while (choice != 3);
+            pilihPenilaian();
+        } while (menu);
     }
+
 }
