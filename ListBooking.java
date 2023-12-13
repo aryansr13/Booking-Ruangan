@@ -123,17 +123,25 @@ public class ListBooking {
             }
 
             // Pilihan ruangan oleh user
-            System.out.print("\nSilahkan masukan ruangan yang ingin anda pesan (1/2/3): ");
+            System.out.print(
+                    "\nSilahkan masukan ruangan yang ingin anda pesan (1/2/3) atau (0) untuk membatalkan pilihan: ");
             ruang = sc.nextInt();
 
-            // Kondisi ketika pilihan selain 1 - 3
-            if (ruang > 3 || ruang < 1 || ruanganTerbooking[ruang - 1]) {
+            // Kondisi ketika pilihan selain 1 - 3 dan 0
+            if ((ruang > 3 || ruang < 1) && ruang != 0) {
                 System.out.println(
                         "\nRuang yang anda pilih tidak tersedia, silahkan untuk mencoba kembali!");
 
-                // Kondisi ketika pilihan benar
-            } else {
+                // Kondisi ketika pilihan benar dan ruangan belum terbooking
+            } else if (ruang != 0 && !ruanganTerbooking[ruang - 1]) {
                 isListBooking = true;
+                // Kondisi ketika pengguna memilih ruangan yang sudah dibooking
+            } else if (ruang != 0 && ruanganTerbooking[ruang - 1]) {
+                System.out.println("\nRuangan " + ruang + " telah terbooking, silahkan pilih ruangan yang lain.");
+                // Kondisi ketika pengguna memilih 0 untuk membatalkan pilihan ruangan
+            } else if (ruang == 0) {
+                System.out.println("\nAnda membatalkan pemilihan ruangan.\n");
+                return;
             }
         }
 
@@ -151,7 +159,7 @@ public class ListBooking {
             System.out.println("==================================================");
 
             // Pilihan user
-            System.out.print("\nJika anda telah yakin dengan ruangan " + ruang + " ketik (y/t): ");
+            System.out.print("\nJika anda telah yakin dengan ruangan " + ruang + " ketik 'y', jika batal ketik 't': ");
             konfirmasiRuangan = sc.next();
 
             // Kondisi ketika user memilih y maka ruangan berhasil dipesan
